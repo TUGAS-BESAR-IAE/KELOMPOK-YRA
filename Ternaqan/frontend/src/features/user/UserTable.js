@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function UserTable({ admins, onEdit, onDelete }) {
+function UserTable({ admins, onDelete }) {
+  const navigate = useNavigate();
+
   return (
     <table
       border="1"
@@ -29,7 +32,7 @@ function UserTable({ admins, onEdit, onDelete }) {
             <td>{admin.username}</td>
             <td>
               <button
-                onClick={() => onEdit(admin)}
+                onClick={() => navigate(`/user/edit/${admin.id}`)}
                 style={{
                   marginRight: 8,
                   background: "#ffa726",
