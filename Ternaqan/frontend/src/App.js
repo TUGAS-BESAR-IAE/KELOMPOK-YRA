@@ -7,7 +7,8 @@ import {
 import Sidebar from "./components/Sidebar";
 import Product from "./features/product/Product";
 import Transactions from "./features/transactions/Transactions";
-import User from "./features/user/User";
+import UserList from "./features/user/UserList";
+import UserCreate from "./features/user/UserCreate";
 import Dashboard from "./features/dashboard";
 
 function App() {
@@ -15,10 +16,11 @@ function App() {
     <Router>
       <Sidebar />
       <Routes>
-        <Route path="/" element={<Dashboard/>} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/product" element={<Product />} />
         <Route path="/transactions" element={<Transactions />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user/list" element={<UserList />} />
+        <Route path="/user/create" element={<UserCreate />} />
       </Routes>
     </Router>
   );
