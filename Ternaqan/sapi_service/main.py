@@ -23,66 +23,66 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Get all sapi
-@app.get("/sapis")
-def get_sapis():
-    conn = get_db_connection()
-    sapis = conn.execute("SELECT * FROM sapi").fetchall()
-    conn.close()
-    return JSONResponse([dict(row) for row in sapis])
+# # Get all sapi
+# @app.get("/sapis")
+# def get_sapis():
+#     conn = get_db_connection()
+#     sapis = conn.execute("SELECT * FROM sapi").fetchall()
+#     conn.close()
+#     return JSONResponse([dict(row) for row in sapis])
 
-# Get Sapi by ID
-@app.get("/sapis/{sapi_id}")
-def get_sapi_by_id(sapi_id: int = Path(..., description="ID sapi yang ingin diambil")):
-    conn = get_db_connection()
-    sapi = conn.execute("SELECT * FROM sapi WHERE id = ?", (sapi_id,)).fetchone()
-    conn.close()
-    if sapi:
-        return dict(sapi)
-    else:
-        raise HTTPException(status_code=404, detail="Sapi not found")
+# # Get Sapi by ID
+# @app.get("/sapis/{sapi_id}")
+# def get_sapi_by_id(sapi_id: int = Path(..., description="ID sapi yang ingin diambil")):
+#     conn = get_db_connection()
+#     sapi = conn.execute("SELECT * FROM sapi WHERE id = ?", (sapi_id,)).fetchone()
+#     conn.close()
+#     if sapi:
+#         return dict(sapi)
+#     else:
+#         raise HTTPException(status_code=404, detail="Sapi not found")
 
-# Edit Sapi
-@app.patch("/sapis/{sapi_id}")
-def update_sapi(
-    sapi_id: int = Path(..., description="ID sapi yang akan diupdate"),
-    umur: int = Body(None),
-    berat: float = Body(None),
-    stok: int = Body(None),
-    harga: float = Body(None)
-):
-    conn = get_db_connection()
-    cur = conn.cursor()
-    sapi = cur.execute("SELECT * FROM sapi WHERE id = ?", (sapi_id,)).fetchone()
-    if not sapi:
-        conn.close()
-        raise HTTPException(status_code=404, detail="Sapi not found")
-    updated_umur = umur if umur is not None else sapi["umur"]
-    updated_berat = berat if berat is not None else sapi["berat"]
-    updated_stok = stok if stok is not None else sapi["stok"]
-    updated_harga = harga if harga is not None else sapi["harga"]
-    cur.execute(
-        "UPDATE sapi SET umur=?, berat=?, stok=?, harga=? WHERE id=?",
-        (updated_umur, updated_berat, updated_stok, updated_harga, sapi_id)
-    )
-    conn.commit()
-    updated_sapi = cur.execute("SELECT * FROM sapi WHERE id = ?", (sapi_id,)).fetchone()
-    conn.close()
-    return dict(updated_sapi)
+# # Edit Sapi
+# @app.patch("/sapis/{sapi_id}")
+# def update_sapi(
+#     sapi_id: int = Path(..., description="ID sapi yang akan diupdate"),
+#     umur: int = Body(None),
+#     berat: float = Body(None),
+#     stok: int = Body(None),
+#     harga: float = Body(None)
+# ):
+#     conn = get_db_connection()
+#     cur = conn.cursor()
+#     sapi = cur.execute("SELECT * FROM sapi WHERE id = ?", (sapi_id,)).fetchone()
+#     if not sapi:
+#         conn.close()
+#         raise HTTPException(status_code=404, detail="Sapi not found")
+#     updated_umur = umur if umur is not None else sapi["umur"]
+#     updated_berat = berat if berat is not None else sapi["berat"]
+#     updated_stok = stok if stok is not None else sapi["stok"]
+#     updated_harga = harga if harga is not None else sapi["harga"]
+#     cur.execute(
+#         "UPDATE sapi SET umur=?, berat=?, stok=?, harga=? WHERE id=?",
+#         (updated_umur, updated_berat, updated_stok, updated_harga, sapi_id)
+#     )
+#     conn.commit()
+#     updated_sapi = cur.execute("SELECT * FROM sapi WHERE id = ?", (sapi_id,)).fetchone()
+#     conn.close()
+#     return dict(updated_sapi)
 
-# Delete Sapi
-@app.delete("/sapis/{sapi_id}")
-def delete_sapi(sapi_id: int = Path(..., description="ID sapi yang akan dihapus")):
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute("DELETE FROM sapi WHERE id = ?", (sapi_id,))
-    conn.commit()
-    deleted = cur.rowcount
-    conn.close()
-    if deleted:
-        return {"message": f"Sapi dengan id {sapi_id} berhasil dihapus."}
-    else:
-        raise HTTPException(status_code=404, detail="Sapi not found")
+# # Delete Sapi
+# @app.delete("/sapis/{sapi_id}")
+# def delete_sapi(sapi_id: int = Path(..., description="ID sapi yang akan dihapus")):
+#     conn = get_db_connection()
+#     cur = conn.cursor()
+#     cur.execute("DELETE FROM sapi WHERE id = ?", (sapi_id,))
+#     conn.commit()
+#     deleted = cur.rowcount
+#     conn.close()
+#     if deleted:
+#         return {"message": f"Sapi dengan id {sapi_id} berhasil dihapus."}
+#     else:
+#         raise HTTPException(status_code=404, detail="Sapi not found")
 
 app.mount("/", graphql_app)
 

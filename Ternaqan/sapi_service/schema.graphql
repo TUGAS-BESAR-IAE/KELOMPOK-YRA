@@ -14,4 +14,5 @@ type Query {
 type Mutation {
   createSapi(umur: Int, berat: Float!, stok: Int!, harga: Float!): Sapi
   deleteSapi(id: Int!): Boolean
+  updateSapi(id: Int!, umur: Int, berat: Float, stok: Int, harga: Float): Sapi
 }
