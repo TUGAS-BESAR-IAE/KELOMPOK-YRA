@@ -2,7 +2,7 @@ import React from "react";
 import ProductForm from "./ProductForm";
 import "./product.css";
 
-const API_URL = "http://localhost:8000/";
+const API_URL = "http://localhost:8001/";
 
 function ProductCreate() {
   const handleSubmit = (data) => {

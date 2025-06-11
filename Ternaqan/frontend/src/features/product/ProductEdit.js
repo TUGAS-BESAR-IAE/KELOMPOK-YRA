@@ -3,7 +3,7 @@ import ProductForm from "./ProductForm";
 import { useParams, useNavigate } from "react-router-dom";
 import "./product.css";
 
-const API_URL = "http://localhost:8000/";
+const API_URL = "http://localhost:8001/";
 
 function ProductEdit() {
   const { id } = useParams();
@@ -66,7 +66,9 @@ function ProductEdit() {
   if (loading)
     return <div style={{ marginLeft: 320, padding: 20 }}>Loading...</div>;
   if (!initialData)
-    return <div style={{ marginLeft: 320, padding: 20 }}>Product not found</div>;
+    return (
+      <div style={{ marginLeft: 320, padding: 20 }}>Product not found</div>
+    );
 
   return (
     <div className="product-container">

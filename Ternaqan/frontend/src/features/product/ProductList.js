@@ -3,7 +3,7 @@ import ProductTable from "./ProductTable";
 import { useNavigate } from "react-router-dom";
 import "./product.css";
 
-const API_URL = "http://localhost:8000/";
+const API_URL = "http://localhost:8001/";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
