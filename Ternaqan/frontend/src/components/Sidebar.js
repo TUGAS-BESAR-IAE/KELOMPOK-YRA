@@ -23,7 +23,7 @@ function Sidebar() {
             style={{ cursor: "pointer" }}
             onClick={() => setUserDropdown((v) => !v)}
           >
-            User {userDropdown ? "▲" : "▼"}
+            Admin {userDropdown ? "▲" : "▼"}
           </span>
           {userDropdown && (
             <ul style={{ listStyle: "none", paddingLeft: 16 }}>

@@ -1,0 +1,29 @@
+type Peternak {
+  id: Int!
+  nama: String!
+  alamat: String
+  nohp: String
+  username: String!
+}
+
+type Query {
+  peternaks: [Peternak!]!
+  peternak(id: Int!): Peternak
+}
+
+type Mutation {
+  createPeternak(
+    nama: String!
+    alamat: String
+    nohp: String
+    username: String!
+  ): Peternak
+  updatePeternak(
+    id: Int!
+    nama: String
+    alamat: String
+    nohp: String
+    username: String
+  ): Peternak
+  deletePeternak(id: Int!): Boolean
+}
