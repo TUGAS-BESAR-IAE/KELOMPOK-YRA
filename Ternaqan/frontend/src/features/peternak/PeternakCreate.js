@@ -8,6 +8,7 @@ const API_URL = "http://localhost:8002/";
 
 function PeternakCreate() {
   const navigate = useNavigate();
+
   const handleSubmit = (data) => {
     fetch(API_URL, {
       method: "POST",
@@ -31,7 +32,7 @@ function PeternakCreate() {
             "Data peternak berhasil ditambahkan.",
             "success"
           ).then(() => {
-            window.location.href = "/peternak";
+            navigate("/peternak");
           });
         } else {
           Swal.fire("Gagal!", "Gagal menambah peternak.", "error");
@@ -47,7 +48,7 @@ function PeternakCreate() {
       <h2 className="peternak-title">Tambah Peternak</h2>
       <PeternakForm
         onSubmit={handleSubmit}
-        onCancel={() => navigate("/product")}
+        onCancel={() => navigate("/peternak")}
       />
     </div>
   );

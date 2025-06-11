@@ -95,15 +95,13 @@ function UserForm({ onSubmit, initialData, onCancel }) {
           <button className="user-form-btn" type="submit">
             {initialData ? "Update" : "Create"}
           </button>
-          {initialData && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="user-form-btn cancel"
-            >
-              Cancel
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={onCancel}
+            className="user-form-btn cancel"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

@@ -81,15 +81,13 @@ function PeternakForm({ onSubmit, initialData, onCancel }) {
           <button className="peternak-form-btn" type="submit">
             {initialData ? "Update" : "Create"}
           </button>
-          {initialData && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="peternak-form-btn cancel"
-            >
-              Cancel
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={onCancel}
+            className="peternak-form-btn cancel"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>
