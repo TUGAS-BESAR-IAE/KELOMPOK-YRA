@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import ProductTable from "./ProductTable";
+import PeternakTable from "./PeternakTable";
 import { useNavigate } from "react-router-dom";
-import "./product.css";
+import "./peternak.css";
 
-const API_URL = "http://localhost:8001/";
+const API_URL = "http://localhost:8002/";
 
-function ProductList() {
-  const [products, setProducts] = useState([]);
+function PeternakList() {
+  const [peternaks, setPeternaks] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchProducts = () => {
+  const fetchPeternaks = () => {
     setLoading(true);
     fetch(API_URL, {
       method: "POST",
@@ -18,12 +18,12 @@ function ProductList() {
       body: JSON.stringify({
         query: `
           query {
-            products {
+            peternaks {
               id
               nama
-              harga
-              stok
-              kategori
+              alamat
+              nohp
+              username
             }
           }
         `,
@@ -31,52 +31,52 @@ function ProductList() {
     })
       .then((res) => res.json())
       .then((result) => {
-        setProducts(result.data.products || []);
+        setPeternaks(result.data.peternaks || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchPeternaks();
   }, []);
 
   const handleDelete = (id) => {
-    if (!window.confirm("Yakin ingin menghapus produk ini?")) return;
+    if (!window.confirm("Yakin ingin menghapus peternak ini?")) return;
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           mutation {
-            deleteProduct(id: ${id})
+            deletePeternak(id: ${id})
           }
         `,
       }),
     })
       .then((res) => res.json())
-      .then(() => fetchProducts());
+      .then(() => fetchPeternaks());
   };
 
   return (
     <>
-      <h2 className="product-title">Sapi List</h2>
+      <h2 className="peternak-title">Peternak List</h2>
       <button
-        className="product-form-btn"
+        className="peternak-form-btn"
         style={{ maxWidth: 220, marginBottom: 24 }}
-        onClick={() => navigate("/product/create")}
+        onClick={() => navigate("/peternak/create")}
       >
-        + Tambah Sapi
+        + Tambah Peternak
       </button>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="product-table-container">
-          <ProductTable products={products} onDelete={handleDelete} />
+        <div className="peternak-table-container">
+          <PeternakTable peternaks={peternaks} onDelete={handleDelete} />
         </div>
       )}
     </>
   );
 }
 
-export default ProductList;
+export default PeternakList;

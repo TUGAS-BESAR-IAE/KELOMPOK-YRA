@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import UserTable from "./UserTable";
-import "./user.css"; 
+import { useNavigate } from "react-router-dom";
+import "./user.css";
 
 const API_URL = "http://localhost:8000/";
 
 function UserList({ onEdit }) {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchAdmins = () => {
     setLoading(true);
@@ -66,6 +68,13 @@ function UserList({ onEdit }) {
   return (
     <div className="userlist-container">
       <h2 className="userlist-title">User List</h2>
+      <button
+        className="user-create"
+        style={{ maxWidth: 220, marginBottom: 24 }}
+        onClick={() => navigate("/user/create")}
+      >
+        + Tambah User
+      </button>
       {loading ? (
         <p>Loading...</p>
       ) : (

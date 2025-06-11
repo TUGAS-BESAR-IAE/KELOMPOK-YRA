@@ -76,6 +76,22 @@
   box-shadow: 0 2px 8px rgba(22, 137, 106, 0.08);
 }
 
+.user-create {
+  width: 100%;
+  max-width: 420px;
+  background: #1abc9c;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 12px 0;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.18s;
+  letter-spacing: 0.5px;
+}
+
 .userlist-action-btn.edit {
   background: #27ae60;
 }
