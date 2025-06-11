@@ -88,61 +88,6 @@
   filter: brightness(1.1);
 }
 
-/* User Form */
-.user-form-container {
-  background: #f9fefb;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(22, 137, 106, 0.07);
-  padding: 28px 24px;
-  margin-bottom: 32px;
-  max-width: 700px;
-}
-
-.user-form-fields {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.user-form-fields input {
-  flex: 1 1 180px;
-  padding: 10px 12px;
-  border: 1px solid #b2dfdb;
-  border-radius: 6px;
-  font-size: 1rem;
-  margin-bottom: 12px;
-  background: #fff;
-  transition: border 0.18s;
-}
-
-.user-form-fields input:focus {
-  border: 1.5px solid #1abc9c;
-  outline: none;
-}
-
-.user-form-btn {
-  flex: 1 1 120px;
-  background: #1abc9c;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 0;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: background 0.18s;
-}
-
-.user-form-btn.cancel {
-  background: #aaa;
-  color: #fff;
-}
-
-.user-form-btn:hover {
-  filter: brightness(1.1);
-}
-
 /* Responsive */
 @media (max-width: 900px) {
   .userlist-container {

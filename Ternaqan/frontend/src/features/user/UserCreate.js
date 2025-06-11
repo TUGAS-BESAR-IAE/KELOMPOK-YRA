@@ -1,6 +1,6 @@
 import React from "react";
 import UserForm from "./UserForm";
-import "./user.css"
+import "./userForm.css";
 
 const API_URL = "http://localhost:8000/";
 
@@ -30,7 +30,7 @@ function UserCreate() {
   };
 
   return (
-    <div style={{ marginLeft: 320, padding: 20 }}>
+    <div className="user-container">
       <h2>Create Admin</h2>
       <UserForm onSubmit={handleSubmit} />
     </div>
