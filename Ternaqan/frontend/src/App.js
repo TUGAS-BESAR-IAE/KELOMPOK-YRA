@@ -7,6 +7,8 @@ import UserList from "./features/user/UserList";
 import UserCreate from "./features/user/UserCreate";
 import Dashboard from "./features/dashboard/dashboard";
 import UserEdit from "./features/user/UserEdit";
+import ProductCreate from "./features/product/ProductCreate";
+import ProductEdit from "./features/product/ProductEdit";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/user/list" element={<UserList />} />
         <Route path="/user/create" element={<UserCreate />} />
         <Route path="/user/edit/:id" element={<UserEdit />} />
+        <Route path="/product/create" element={<ProductCreate />} />
+        <Route path="/product/edit/:id" element={<ProductEdit />} />
       </Routes>
     </Router>
   );
