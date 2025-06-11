@@ -17,6 +17,9 @@ function Sidebar() {
         </li>
         <li>
           <Link to="/transactions">Transactions</Link>
+        </li>        
+        <li>
+          <Link to="/transactions">Peternak</Link>
         </li>
         <li>
           <span
