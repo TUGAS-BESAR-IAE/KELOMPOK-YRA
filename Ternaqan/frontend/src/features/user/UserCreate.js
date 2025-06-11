@@ -31,7 +31,7 @@ function UserCreate() {
 
   return (
     <div className="user-container">
-      <h2>Create Admin</h2>
+      <h2 className="user-title">Create Admin</h2>
       <UserForm onSubmit={handleSubmit} />
     </div>
   );
