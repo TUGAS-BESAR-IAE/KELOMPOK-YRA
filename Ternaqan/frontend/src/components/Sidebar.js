@@ -7,7 +7,7 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <h2>Dashboard</h2>
+      <h1>TernaQan</h1>
       <ul>
         <li>
           <Link to="/">Dashboard</Link>

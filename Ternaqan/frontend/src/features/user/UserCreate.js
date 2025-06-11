@@ -1,5 +1,6 @@
 import React from "react";
 import UserForm from "./UserForm";
+import "./user.css"
 
 const API_URL = "http://localhost:8000/";
 
