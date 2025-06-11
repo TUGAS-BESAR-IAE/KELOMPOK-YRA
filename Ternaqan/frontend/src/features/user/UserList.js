@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserTable from "./UserTable";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./user.css";
 
 const API_URL = "http://localhost:8000/";
@@ -42,22 +43,38 @@ function UserList({ onEdit }) {
     fetchAdmins();
   }, []);
 
-  // DELETE
   const handleDelete = (id) => {
-    if (!window.confirm("Yakin ingin menghapus user ini?")) return;
-    fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `
-          mutation {
-            deleteAdmin(id: ${id})
-          }
-        `,
-      }),
-    })
-      .then((res) => res.json())
-      .then(() => fetchAdmins());
+    Swal.fire({
+      title: "Yakin ingin menghapus user ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#e74c3c",
+      cancelButtonColor: "#aaa",
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: `
+              mutation {
+                deleteAdmin(id: ${id})
+              }
+            `,
+          }),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            fetchAdmins();
+            Swal.fire("Berhasil!", "User berhasil dihapus.", "success");
+          })
+          .catch(() => {
+            Swal.fire("Gagal!", "Terjadi kesalahan saat menghapus.", "error");
+          });
+      }
+    });
   };
 
   // EDIT
@@ -67,13 +84,13 @@ function UserList({ onEdit }) {
 
   return (
     <div className="userlist-container">
-      <h2 className="userlist-title">User List</h2>
+      <h2 className="userlist-title">Admin List</h2>
       <button
         className="user-create"
         style={{ maxWidth: 220, marginBottom: 24 }}
         onClick={() => navigate("/user/create")}
       >
-        + Tambah User
+        + Tambah Admin
       </button>
       {loading ? (
         <p>Loading...</p>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PeternakTable from "./PeternakTable";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./peternak.css";
 
 const API_URL = "http://localhost:8002/";
@@ -42,20 +43,41 @@ function PeternakList() {
   }, []);
 
   const handleDelete = (id) => {
-    if (!window.confirm("Yakin ingin menghapus peternak ini?")) return;
-    fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `
-          mutation {
-            deletePeternak(id: ${id})
-          }
-        `,
-      }),
-    })
-      .then((res) => res.json())
-      .then(() => fetchPeternaks());
+    Swal.fire({
+      title: "Yakin ingin menghapus peternak ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#e74c3c",
+      cancelButtonColor: "#aaa",
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: `
+              mutation {
+                deletePeternak(id: ${id})
+              }
+            `,
+          }),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            fetchPeternaks();
+            Swal.fire(
+              "Berhasil!",
+              "Data peternak berhasil dihapus.",
+              "success"
+            );
+          })
+          .catch(() => {
+            Swal.fire("Gagal!", "Terjadi kesalahan saat menghapus.", "error");
+          });
+      }
+    });
   };
 
   return (

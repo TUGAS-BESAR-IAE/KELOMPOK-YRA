@@ -12,6 +12,7 @@ import ProductEdit from "./features/product/ProductEdit";
 import Peternak from "./features/peternak/Peternak";
 import PeternakCreate from "./features/peternak/PeternakCreate";
 import PeternakEdit from "./features/peternak/PeternakEdit";
+import Sapi from "./features/product/Sapi";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Sidebar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/sapi" element={<Sapi />} />
         <Route path="/product" element={<Product />} />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/user/list" element={<UserList />} />

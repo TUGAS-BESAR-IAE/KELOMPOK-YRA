@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import {
+  FaTachometerAlt,
+  FaUserTie,
+  FaUserFriends,
+  FaCogs,
+  FaHippo,
+  FaUsers,
+  FaExchangeAlt,
+} from "react-icons/fa";
 import "./sidebar.css";
 
 function Sidebar() {
@@ -13,6 +22,7 @@ function Sidebar() {
       <ul>
         <li>
           <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+            <FaTachometerAlt style={{ marginRight: 12 }} />
             Dashboard
           </Link>
         </li>
@@ -21,6 +31,7 @@ function Sidebar() {
             to="/sapi"
             className={location.pathname.startsWith("/sapi") ? "active" : ""}
           >
+            <FaHippo style={{ marginRight: 12 }} />
             Sapi
           </Link>
         </li>
@@ -29,6 +40,7 @@ function Sidebar() {
             style={{ cursor: "pointer" }}
             onClick={() => setPeternakDropdown((v) => !v)}
           >
+            <FaUserFriends style={{ marginRight: 12 }} />
             Peternak {peternakDropdown ? "▲" : "▼"}
           </span>
           {peternakDropdown && (
@@ -40,6 +52,7 @@ function Sidebar() {
                     location.pathname.startsWith("/product") ? "active" : ""
                   }
                 >
+                  <FaCogs style={{ marginRight: 10 }} />
                   Kelola Sapi
                 </Link>
               </li>
@@ -51,6 +64,7 @@ function Sidebar() {
             style={{ cursor: "pointer" }}
             onClick={() => setUserDropdown((v) => !v)}
           >
+            <FaUsers style={{ marginRight: 12 }} />
             Admin {userDropdown ? "▲" : "▼"}
           </span>
           {userDropdown && (
@@ -62,6 +76,7 @@ function Sidebar() {
                     location.pathname.startsWith("/user") ? "active" : ""
                   }
                 >
+                  <FaUserTie style={{ marginRight: 10 }} />
                   Kelola Admin
                 </Link>
               </li>
@@ -72,6 +87,7 @@ function Sidebar() {
                     location.pathname.startsWith("/peternak") ? "active" : ""
                   }
                 >
+                  <FaUserFriends style={{ marginRight: 10 }} />
                   Kelola Peternak
                 </Link>
               </li>
@@ -85,6 +101,7 @@ function Sidebar() {
               location.pathname.startsWith("/transactions") ? "active" : ""
             }
           >
+            <FaExchangeAlt style={{ marginRight: 12 }} />
             Transactions
           </Link>
         </li>

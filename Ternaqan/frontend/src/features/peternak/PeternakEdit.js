@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PeternakForm from "./PeternakForm";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./peternak.css";
 
 const API_URL = "http://localhost:8002/";
@@ -56,8 +57,21 @@ function PeternakEdit() {
       }),
     })
       .then((res) => res.json())
-      .then(() => {
-        navigate("/peternak");
+      .then((result) => {
+        if (result.data && result.data.updatePeternak) {
+          Swal.fire(
+            "Berhasil!",
+            "Data peternak berhasil diupdate.",
+            "success"
+          ).then(() => {
+            navigate("/peternak");
+          });
+        } else {
+          Swal.fire("Gagal!", "Gagal mengupdate peternak.", "error");
+        }
+      })
+      .catch(() => {
+        Swal.fire("Gagal!", "Terjadi kesalahan saat update.", "error");
       });
   };
 

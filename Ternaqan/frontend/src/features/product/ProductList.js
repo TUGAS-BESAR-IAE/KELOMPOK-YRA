@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./product.css";
 
 const API_URL = "http://localhost:8001/";
@@ -18,12 +19,12 @@ function ProductList() {
       body: JSON.stringify({
         query: `
           query {
-            products {
+            sapis {
               id
-              nama
-              harga
+              umur
+              berat
               stok
-              kategori
+              harga
             }
           }
         `,
@@ -31,7 +32,7 @@ function ProductList() {
     })
       .then((res) => res.json())
       .then((result) => {
-        setProducts(result.data.products || []);
+        setProducts(result.data.sapis || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -42,20 +43,37 @@ function ProductList() {
   }, []);
 
   const handleDelete = (id) => {
-    if (!window.confirm("Yakin ingin menghapus produk ini?")) return;
-    fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `
-          mutation {
-            deleteProduct(id: ${id})
-          }
-        `,
-      }),
-    })
-      .then((res) => res.json())
-      .then(() => fetchProducts());
+    Swal.fire({
+      title: "Yakin ingin menghapus sapi ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#e74c3c",
+      cancelButtonColor: "#aaa",
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: `
+              mutation {
+                deleteSapi(id: ${id})
+              }
+            `,
+          }),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            fetchProducts();
+            Swal.fire("Berhasil!", "Data sapi berhasil dihapus.", "success");
+          })
+          .catch(() => {
+            Swal.fire("Gagal!", "Terjadi kesalahan saat menghapus.", "error");
+          });
+      }
+    });
   };
 
   return (
