@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./user.css"; // Import the CSS file for styling
 
 function UserForm({ onSubmit, initialData, onCancel }) {
   const [form, setForm] = useState({
@@ -30,85 +31,62 @@ function UserForm({ onSubmit, initialData, onCancel }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        marginBottom: 20,
-        background: "#f9f9f9",
-        padding: 16,
-        borderRadius: 8,
-      }}
-    >
-      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-        <input
-          name="transaction_id"
-          placeholder="Transaction ID"
-          value={form.transaction_id}
-          onChange={handleChange}
-          style={{ flex: 1 }}
-          type="number"
-        />
-        <input
-          name="nama"
-          placeholder="Nama"
-          value={form.nama}
-          onChange={handleChange}
-          style={{ flex: 2 }}
-          required
-        />
-        <input
-          name="alamat"
-          placeholder="Alamat"
-          value={form.alamat}
-          onChange={handleChange}
-          style={{ flex: 2 }}
-        />
-        <input
-          name="nohp"
-          placeholder="No HP"
-          value={form.nohp}
-          onChange={handleChange}
-          style={{ flex: 2 }}
-        />
-        <input
-          name="username"
-          placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
-          style={{ flex: 2 }}
-          required
-        />
-        <button
-          type="submit"
-          style={{
-            flex: 1,
-            background: "#1976d2",
-            color: "#fff",
-            border: "none",
-            borderRadius: 4,
-            padding: "8px 16px",
-          }}
-        >
-          {initialData ? "Update" : "Create"}
-        </button>
-        {initialData && (
-          <button
-            type="button"
-            onClick={onCancel}
-            style={{
-              flex: 1,
-              background: "#aaa",
-              color: "#fff",
-              border: "none",
-              borderRadius: 4,
-              padding: "8px 16px",
-            }}
-          >
-            Cancel
+    <div className="user-form-container">
+      <form onSubmit={handleSubmit} className="user-form">
+        <div className="user-form-fields">
+          <input
+            name="transaction_id"
+            placeholder="Transaction ID"
+            value={form.transaction_id}
+            onChange={handleChange}
+            className="user-form-input"
+            type="number"
+          />
+          <input
+            name="nama"
+            placeholder="Nama"
+            value={form.nama}
+            onChange={handleChange}
+            className="user-form-input"
+            required
+          />
+          <input
+            name="alamat"
+            placeholder="Alamat"
+            value={form.alamat}
+            onChange={handleChange}
+            className="user-form-input"
+          />
+          <input
+            name="nohp"
+            placeholder="No HP"
+            value={form.nohp}
+            onChange={handleChange}
+            className="user-form-input"
+          />
+          <input
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
+            className="user-form-input"
+            required
+          />
+          <button className="user-form-btn" type="submit">
+            {initialData ? "Update" : "Create"}
           </button>
-        )}
-      </div>
-    </form>
+          {initialData && (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="user-form-btn cancel"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      </form>
+    </div>
   );
 }
 

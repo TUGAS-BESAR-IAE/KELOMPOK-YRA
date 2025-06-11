@@ -5,11 +5,7 @@ function UserTable({ admins, onDelete }) {
   const navigate = useNavigate();
 
   return (
-    <table
-      border="1"
-      cellPadding="8"
-      style={{ width: "100%", borderCollapse: "collapse", background: "#fff" }}
-    >
+    <table className="userlist-table">
       <thead style={{ background: "#1976d2", color: "#fff" }}>
         <tr>
           <th>ID</th>
@@ -33,26 +29,13 @@ function UserTable({ admins, onDelete }) {
             <td>
               <button
                 onClick={() => navigate(`/user/edit/${admin.id}`)}
-                style={{
-                  marginRight: 8,
-                  background: "#ffa726",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 4,
-                  padding: "4px 8px",
-                }}
+                className="userlist-action-btn edit"
               >
                 Edit
               </button>
               <button
                 onClick={() => onDelete(admin.id)}
-                style={{
-                  background: "#e53935",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 4,
-                  padding: "4px 8px",
-                }}
+                className="userlist-action-btn delete"
               >
                 Delete
               </button>
