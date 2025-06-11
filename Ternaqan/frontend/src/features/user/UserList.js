@@ -63,16 +63,18 @@ function UserList({ onEdit }) {
   };
 
   return (
-    <div style={{ marginLeft: 320, padding: 20 }}>
-      <h2>User List</h2>
+    <div className="userlist-container">
+      <h2 className="userlist-title">User List</h2>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <UserTable
-          admins={admins}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+        <div className="userlist-table-container">
+          <UserTable
+            admins={admins}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        </div>
       )}
     </div>
   );
