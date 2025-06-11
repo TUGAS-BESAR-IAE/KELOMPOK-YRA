@@ -1,5 +1,6 @@
 import React from "react";
 import UserForm from "./UserForm";
+import Swal from "sweetalert2";
 import "./userForm.css";
 
 const API_URL = "http://localhost:8000/";
@@ -24,8 +25,19 @@ function UserCreate() {
       }),
     })
       .then((res) => res.json())
-      .then(() => {
-        window.location.href = "/user/list";
+      .then((result) => {
+        if (result.data && result.data.createAdmin) {
+          Swal.fire("Berhasil!", "User berhasil ditambahkan.", "success").then(
+            () => {
+              window.location.href = "/user/list";
+            }
+          );
+        } else {
+          Swal.fire("Gagal!", "Gagal menambah user.", "error");
+        }
+      })
+      .catch(() => {
+        Swal.fire("Gagal!", "Terjadi kesalahan saat menambah.", "error");
       });
   };
 

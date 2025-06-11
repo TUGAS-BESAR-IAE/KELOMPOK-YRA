@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductForm from "./ProductForm";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./product.css";
 
 const API_URL = "http://localhost:8001/";
@@ -59,8 +60,21 @@ function ProductEdit() {
       }),
     })
       .then((res) => res.json())
-      .then(() => {
-        navigate("/product");
+      .then((result) => {
+        if (result.data && result.data.updateSapi) {
+          Swal.fire(
+            "Berhasil!",
+            "Data sapi berhasil diupdate.",
+            "success"
+          ).then(() => {
+            navigate("/product");
+          });
+        } else {
+          Swal.fire("Gagal!", "Gagal mengupdate sapi.", "error");
+        }
+      })
+      .catch(() => {
+        Swal.fire("Gagal!", "Terjadi kesalahan saat update.", "error");
       });
   };
 

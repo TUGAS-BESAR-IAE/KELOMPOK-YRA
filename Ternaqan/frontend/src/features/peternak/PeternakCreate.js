@@ -1,5 +1,6 @@
 import React from "react";
 import PeternakForm from "./PeternakForm";
+import Swal from "sweetalert2";
 import "./peternak.css";
 
 const API_URL = "http://localhost:8002/";
@@ -21,14 +22,27 @@ function PeternakCreate() {
       }),
     })
       .then((res) => res.json())
-      .then(() => {
-        window.location.href = "/peternak";
+      .then((result) => {
+        if (result.data && result.data.createPeternak) {
+          Swal.fire(
+            "Berhasil!",
+            "Data peternak berhasil ditambahkan.",
+            "success"
+          ).then(() => {
+            window.location.href = "/peternak";
+          });
+        } else {
+          Swal.fire("Gagal!", "Gagal menambah peternak.", "error");
+        }
+      })
+      .catch(() => {
+        Swal.fire("Gagal!", "Terjadi kesalahan saat menambah.", "error");
       });
   };
 
   return (
     <div className="peternak-container">
-      <h2 className="peternak-title">Create Peternak</h2>
+      <h2 className="peternak-title">Tambah Peternak</h2>
       <PeternakForm onSubmit={handleSubmit} />
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserForm from "./UserForm";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const API_URL = "http://localhost:8000/";
 
@@ -57,8 +58,19 @@ function UserEdit() {
       }),
     })
       .then((res) => res.json())
-      .then(() => {
-        navigate("/user/list");
+      .then((result) => {
+        if (result.data && result.data.updateAdmin) {
+          Swal.fire("Berhasil!", "User berhasil diupdate.", "success").then(
+            () => {
+              navigate("/user/list");
+            }
+          );
+        } else {
+          Swal.fire("Gagal!", "Gagal mengupdate user.", "error");
+        }
+      })
+      .catch(() => {
+        Swal.fire("Gagal!", "Terjadi kesalahan saat update.", "error");
       });
   };
 

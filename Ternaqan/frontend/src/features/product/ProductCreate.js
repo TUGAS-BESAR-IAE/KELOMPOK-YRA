@@ -1,5 +1,6 @@
 import React from "react";
 import ProductForm from "./ProductForm";
+import Swal from "sweetalert2";
 import "./product.css";
 
 const API_URL = "http://localhost:8001/";
@@ -26,8 +27,21 @@ function ProductCreate() {
       }),
     })
       .then((res) => res.json())
-      .then(() => {
-        window.location.href = "/product";
+      .then((result) => {
+        if (result.data && result.data.createSapi) {
+          Swal.fire(
+            "Berhasil!",
+            "Data sapi berhasil ditambahkan.",
+            "success"
+          ).then(() => {
+            window.location.href = "/product";
+          });
+        } else {
+          Swal.fire("Gagal!", "Gagal menambah sapi.", "error");
+        }
+      })
+      .catch(() => {
+        Swal.fire("Gagal!", "Terjadi kesalahan saat menambah.", "error");
       });
   };
 
