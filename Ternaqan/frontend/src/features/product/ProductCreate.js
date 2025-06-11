@@ -1,11 +1,14 @@
 import React from "react";
 import ProductForm from "./ProductForm";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./product.css";
 
 const API_URL = "http://localhost:8001/";
 
 function ProductCreate() {
+  const navigate = useNavigate();
+
   const handleSubmit = (data) => {
     fetch(API_URL, {
       method: "POST",
@@ -34,7 +37,7 @@ function ProductCreate() {
             "Data sapi berhasil ditambahkan.",
             "success"
           ).then(() => {
-            window.location.href = "/product";
+            navigate("/product");
           });
         } else {
           Swal.fire("Gagal!", "Gagal menambah sapi.", "error");
@@ -48,7 +51,10 @@ function ProductCreate() {
   return (
     <div className="product-container">
       <h2 className="product-title">Tambah Sapi</h2>
-      <ProductForm onSubmit={handleSubmit} />
+      <ProductForm
+        onSubmit={handleSubmit}
+        onCancel={() => navigate("/product")}
+      />
     </div>
   );
 }

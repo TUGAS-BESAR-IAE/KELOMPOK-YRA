@@ -1,11 +1,13 @@
 import React from "react";
 import PeternakForm from "./PeternakForm";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./peternak.css";
 
 const API_URL = "http://localhost:8002/";
 
 function PeternakCreate() {
+  const navigate = useNavigate();
   const handleSubmit = (data) => {
     fetch(API_URL, {
       method: "POST",
@@ -43,7 +45,10 @@ function PeternakCreate() {
   return (
     <div className="peternak-container">
       <h2 className="peternak-title">Tambah Peternak</h2>
-      <PeternakForm onSubmit={handleSubmit} />
+      <PeternakForm
+        onSubmit={handleSubmit}
+        onCancel={() => navigate("/product")}
+      />
     </div>
   );
 }

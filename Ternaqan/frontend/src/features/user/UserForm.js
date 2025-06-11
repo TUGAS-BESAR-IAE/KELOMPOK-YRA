@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./userForm.css"; // Import the CSS file for styling
+import "./userForm.css";
 
 function UserForm({ onSubmit, initialData, onCancel }) {
   const [form, setForm] = useState({
@@ -34,7 +34,11 @@ function UserForm({ onSubmit, initialData, onCancel }) {
     <div className="user-form-container">
       <form onSubmit={handleSubmit} className="user-form">
         <div className="user-form-fields">
+          <label className="user-form-label" htmlFor="transaction_id">
+            Transaction ID
+          </label>
           <input
+            id="transaction_id"
             name="transaction_id"
             placeholder="Transaction ID"
             value={form.transaction_id}
@@ -42,7 +46,11 @@ function UserForm({ onSubmit, initialData, onCancel }) {
             className="user-form-input"
             type="number"
           />
+          <label className="user-form-label" htmlFor="nama">
+            Nama
+          </label>
           <input
+            id="nama"
             name="nama"
             placeholder="Nama"
             value={form.nama}
@@ -50,21 +58,33 @@ function UserForm({ onSubmit, initialData, onCancel }) {
             className="user-form-input"
             required
           />
+          <label className="user-form-label" htmlFor="alamat">
+            Alamat
+          </label>
           <input
+            id="alamat"
             name="alamat"
             placeholder="Alamat"
             value={form.alamat}
             onChange={handleChange}
             className="user-form-input"
           />
+          <label className="user-form-label" htmlFor="nohp">
+            No HP
+          </label>
           <input
+            id="nohp"
             name="nohp"
             placeholder="No HP"
             value={form.nohp}
             onChange={handleChange}
             className="user-form-input"
           />
+          <label className="user-form-label" htmlFor="username">
+            Username
+          </label>
           <input
+            id="username"
             name="username"
             placeholder="Username"
             value={form.username}
