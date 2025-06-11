@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import "./dashboard.css"; // Import the CSS file for styling
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -72,42 +73,18 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ marginLeft: 320, padding: 20 }}>
-      <h2>Dashboard</h2>
-      <div
-        style={{
-          display: "flex",
-          gap: 32,
-          marginBottom: 40,
-        }}
-      >
-        <div
-          style={{
-            background: "#1976d2",
-            color: "#fff",
-            borderRadius: 12,
-            padding: "32px 48px",
-            minWidth: 220,
-            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ fontSize: 18, marginBottom: 8 }}>Total User</div>
-          <div style={{ fontSize: 48, fontWeight: "bold" }}>{userCount}</div>
+    <div className="dashboard-root">
+      <h2 className="dashboard-title">Dashboard</h2>
+      <div className="dashboard-cards">
+        <div className="dashboard-card">
+          <div className="dashboard-card-label">Total User</div>
+          <div className="dashboard-card-value">{userCount}</div>
         </div>
       </div>
-      <div
-        style={{
-          background: "#fff",
-          borderRadius: 12,
-          padding: 24,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-          maxWidth: 600,
-        }}
-      >
-        <h3 style={{ marginBottom: 24 }}>Grafik User per Transaction ID</h3>
+      <div className="dashboard-chart-container">
+        <h3 className="dashboard-chart-title">
+          Grafik User per Transaction ID
+        </h3>
         <Bar data={chartData} />
       </div>
     </div>

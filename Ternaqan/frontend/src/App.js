@@ -5,7 +5,7 @@ import Product from "./features/product/Product";
 import Transactions from "./features/transactions/Transactions";
 import UserList from "./features/user/UserList";
 import UserCreate from "./features/user/UserCreate";
-import Dashboard from "./features/dashboard";
+import Dashboard from "./features/dashboard/dashboard";
 import UserEdit from "./features/user/UserEdit";
 
 function App() {

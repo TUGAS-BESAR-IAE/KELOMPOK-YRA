@@ -1,9 +1,13 @@
 import React from "react";
+import ProductList from "./ProductList";
+import "./product.css";
+
 function Product() {
   return (
-    <div style={{ marginLeft: 320, padding: 20}}>
-      <h2>Product Page</h2>
+    <div className="product-container">
+      <ProductList />
     </div>
   );
 }
+
 export default Product;

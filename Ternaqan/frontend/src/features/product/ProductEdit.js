@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import UserForm from "./UserForm";
+import ProductForm from "./ProductForm";
 import { useParams, useNavigate } from "react-router-dom";
+import "./product.css";
 
 const API_URL = "http://localhost:8000/";
 
-function UserEdit() {
+function ProductEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [initialData, setInitialData] = useState(null);
@@ -16,14 +17,13 @@ function UserEdit() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
-          query GetAdmin($id: Int!) {
-            admin(id: $id) {
+          query GetProduct($id: Int!) {
+            product(id: $id) {
               id
-              transaction_id
               nama
-              alamat
-              nohp
-              username
+              harga
+              stok
+              kategori
             }
           }
         `,
@@ -32,7 +32,7 @@ function UserEdit() {
     })
       .then((res) => res.json())
       .then((result) => {
-        setInitialData(result.data.admin);
+        setInitialData(result.data.product);
         setLoading(false);
       });
   }, [id]);
@@ -43,8 +43,8 @@ function UserEdit() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
-          mutation UpdateAdmin($id: Int!, $transaction_id: Int, $nama: String, $alamat: String, $nohp: String, $username: String) {
-            updateAdmin(id: $id, transaction_id: $transaction_id, nama: $nama, alamat: $alamat, nohp: $nohp, username: $username) {
+          mutation UpdateProduct($id: Int!, $nama: String, $harga: Int, $stok: Int, $kategori: String) {
+            updateProduct(id: $id, nama: $nama, harga: $harga, stok: $stok, kategori: $kategori) {
               id
             }
           }
@@ -52,31 +52,32 @@ function UserEdit() {
         variables: {
           ...data,
           id: Number(id),
-          transaction_id: Number(data.transaction_id) || null,
+          harga: Number(data.harga),
+          stok: Number(data.stok),
         },
       }),
     })
       .then((res) => res.json())
       .then(() => {
-        navigate("/user/list");
+        navigate("/product");
       });
   };
 
   if (loading)
     return <div style={{ marginLeft: 320, padding: 20 }}>Loading...</div>;
   if (!initialData)
-    return <div style={{ marginLeft: 320, padding: 20 }}>User not found</div>;
+    return <div style={{ marginLeft: 320, padding: 20 }}>Product not found</div>;
 
   return (
-    <div className="user-container">
-      <h2 className="userlist-title">Edit Admin</h2>
-      <UserForm
+    <div className="product-container">
+      <h2 className="product-title">Edit Product</h2>
+      <ProductForm
         onSubmit={handleSubmit}
         initialData={initialData}
-        onCancel={() => navigate("/user/list")}
+        onCancel={() => navigate("/product")}
       />
     </div>
   );
 }
 
-export default UserEdit;
+export default ProductEdit;
