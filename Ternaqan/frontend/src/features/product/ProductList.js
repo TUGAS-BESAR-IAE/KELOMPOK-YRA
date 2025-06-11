@@ -60,13 +60,13 @@ function ProductList() {
 
   return (
     <>
-      <h2 className="product-title">Product List</h2>
+      <h2 className="product-title">Sapi List</h2>
       <button
         className="product-form-btn"
         style={{ maxWidth: 220, marginBottom: 24 }}
         onClick={() => navigate("/product/create")}
       >
-        + Tambah Product
+        + Tambah Sapi
       </button>
       {loading ? (
         <p>Loading...</p>

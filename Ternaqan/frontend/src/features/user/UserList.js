@@ -69,7 +69,7 @@ function UserList({ onEdit }) {
     <div className="userlist-container">
       <h2 className="userlist-title">User List</h2>
       <button
-        className="userlist-action-btn"
+        className="user-create"
         style={{ maxWidth: 220, marginBottom: 24 }}
         onClick={() => navigate("/user/create")}
       >

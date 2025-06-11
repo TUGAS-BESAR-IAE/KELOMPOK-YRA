@@ -1,20 +1,28 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./sidebar.css";
 
 function Sidebar() {
   const [userDropdown, setUserDropdown] = useState(false);
   const [peternakDropdown, setPeternakDropdown] = useState(false);
+  const location = useLocation();
 
   return (
     <div className="sidebar">
       <h1>TernaQan</h1>
       <ul>
         <li>
-          <Link to="/">Dashboard</Link>
+          <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+            Dashboard
+          </Link>
         </li>
         <li>
-          <Link to="/product">Sapi</Link>
+          <Link
+            to="/sapi"
+            className={location.pathname.startsWith("/sapi") ? "active" : ""}
+          >
+            Sapi
+          </Link>
         </li>
         <li>
           <span
@@ -24,16 +32,16 @@ function Sidebar() {
             Peternak {peternakDropdown ? "▲" : "▼"}
           </span>
           {peternakDropdown && (
-            <ul
-              style={{
-                listStyle: "none",
-                paddingLeft: 16,
-                marginRight: 16,
-                paddingRight: 16,
-              }}
-            >
+            <ul>
               <li>
-                <Link to="/peternak">Kelola Sapi</Link>
+                <Link
+                  to="/product"
+                  className={
+                    location.pathname.startsWith("/product") ? "active" : ""
+                  }
+                >
+                  Kelola Sapi
+                </Link>
               </li>
             </ul>
           )}
@@ -46,25 +54,39 @@ function Sidebar() {
             Admin {userDropdown ? "▲" : "▼"}
           </span>
           {userDropdown && (
-            <ul
-              style={{
-                listStyle: "none",
-                paddingLeft: 16,
-                marginRight: 16,
-                paddingRight: 16,
-              }}
-            >
+            <ul>
               <li>
-                <Link to="/user/list">Kelola Admin</Link>
+                <Link
+                  to="/user/list"
+                  className={
+                    location.pathname.startsWith("/user") ? "active" : ""
+                  }
+                >
+                  Kelola Admin
+                </Link>
               </li>
               <li>
-                <Link to="/peternak">Kelola Peternak</Link>
+                <Link
+                  to="/peternak"
+                  className={
+                    location.pathname.startsWith("/peternak") ? "active" : ""
+                  }
+                >
+                  Kelola Peternak
+                </Link>
               </li>
             </ul>
           )}
         </li>
         <li>
-          <Link to="/transactions">Transactions</Link>
+          <Link
+            to="/transactions"
+            className={
+              location.pathname.startsWith("/transactions") ? "active" : ""
+            }
+          >
+            Transactions
+          </Link>
         </li>
       </ul>
     </div>

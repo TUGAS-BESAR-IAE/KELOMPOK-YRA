@@ -62,6 +62,21 @@
 
 /* Action Buttons */
 .userlist-action-btn {
+  border: none;
+  outline: none;
+  background: #16a085;
+  color: #fff;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 0.97rem;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background 0.18s, filter 0.18s;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(22, 137, 106, 0.08);
+}
+
+.user-create {
   width: 100%;
   max-width: 420px;
   background: #1abc9c;
