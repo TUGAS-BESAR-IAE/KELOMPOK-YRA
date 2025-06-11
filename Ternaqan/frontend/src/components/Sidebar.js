@@ -13,10 +13,13 @@ function Sidebar() {
           <Link to="/">Dashboard</Link>
         </li>
         <li>
-          <Link to="/product">Product</Link>
+          <Link to="/product">Sapi</Link>
         </li>
         <li>
           <Link to="/transactions">Transactions</Link>
+        </li>        
+        <li>
+          <Link to="/transactions">Peternak</Link>
         </li>
         <li>
           <span
