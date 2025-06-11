@@ -11,16 +11,17 @@ function ProductCreate() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
-          mutation CreateProduct($nama: String!, $harga: Int!, $stok: Int!, $kategori: String!) {
-            createProduct(nama: $nama, harga: $harga, stok: $stok, kategori: $kategori) {
+          mutation CreateSapi($umur: Int, $berat: Float!, $stok: Int!, $harga: Float!) {
+            createSapi(umur: $umur, berat: $berat, stok: $stok, harga: $harga) {
               id
             }
           }
         `,
         variables: {
-          ...data,
-          harga: Number(data.harga),
+          umur: Number(data.umur),
+          berat: Number(data.berat),
           stok: Number(data.stok),
+          harga: Number(data.harga),
         },
       }),
     })
@@ -32,7 +33,7 @@ function ProductCreate() {
 
   return (
     <div className="product-container">
-      <h2 className="product-title">Create Product</h2>
+      <h2 className="product-title">Tambah Sapi</h2>
       <ProductForm onSubmit={handleSubmit} />
     </div>
   );

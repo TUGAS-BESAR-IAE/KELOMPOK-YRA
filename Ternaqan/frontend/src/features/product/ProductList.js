@@ -18,12 +18,12 @@ function ProductList() {
       body: JSON.stringify({
         query: `
           query {
-            products {
+            sapis {
               id
-              nama
-              harga
+              umur
+              berat
               stok
-              kategori
+              harga
             }
           }
         `,
@@ -31,7 +31,7 @@ function ProductList() {
     })
       .then((res) => res.json())
       .then((result) => {
-        setProducts(result.data.products || []);
+        setProducts(result.data.sapis || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -42,14 +42,14 @@ function ProductList() {
   }, []);
 
   const handleDelete = (id) => {
-    if (!window.confirm("Yakin ingin menghapus produk ini?")) return;
+    if (!window.confirm("Yakin ingin menghapus sapi ini?")) return;
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           mutation {
-            deleteProduct(id: ${id})
+            deleteSapi(id: ${id})
           }
         `,
       }),

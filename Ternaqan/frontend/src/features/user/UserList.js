@@ -67,13 +67,13 @@ function UserList({ onEdit }) {
 
   return (
     <div className="userlist-container">
-      <h2 className="userlist-title">User List</h2>
+      <h2 className="userlist-title">Admin List</h2>
       <button
         className="user-create"
         style={{ maxWidth: 220, marginBottom: 24 }}
         onClick={() => navigate("/user/create")}
       >
-        + Tambah User
+        + Tambah Admin
       </button>
       {loading ? (
         <p>Loading...</p>

@@ -4,10 +4,10 @@ import "./product.css";
 const API_URL = "http://localhost:8001/";
 
 const SapiList = () => {
-  const [products, setProducts] = useState([]);
+  const [sapis, setSapis] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchProducts = () => {
+  const fetchSapis = () => {
     setLoading(true);
     fetch(API_URL, {
       method: "POST",
@@ -15,12 +15,12 @@ const SapiList = () => {
       body: JSON.stringify({
         query: `
           query {
-            products {
+            sapis {
               id
-              nama
-              harga
+              umur
+              berat
               stok
-              kategori
+              harga
             }
           }
         `,
@@ -28,14 +28,14 @@ const SapiList = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        setProducts(result.data.products || []);
+        setSapis(result.data.sapis || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchSapis();
   }, []);
 
   return (
@@ -49,21 +49,20 @@ const SapiList = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nama</th>
-                <th>Harga</th>
+                <th>Umur</th>
+                <th>Berat</th>
                 <th>Stok</th>
-                <th>Kategori</th>
-                <th>Aksi</th>
+                <th>Harga</th>
               </tr>
             </thead>
             <tbody>
-              {products.map((prod) => (
-                <tr key={prod.id}>
-                  <td>{prod.id}</td>
-                  <td>{prod.nama}</td>
-                  <td>{prod.harga}</td>
-                  <td>{prod.stok}</td>
-                  <td>{prod.kategori}</td>
+              {sapis.map((sapi) => (
+                <tr key={sapi.id}>
+                  <td>{sapi.id}</td>
+                  <td>{sapi.umur}</td>
+                  <td>{sapi.berat}</td>
+                  <td>{sapi.stok}</td>
+                  <td>{sapi.harga}</td>
                 </tr>
               ))}
             </tbody>

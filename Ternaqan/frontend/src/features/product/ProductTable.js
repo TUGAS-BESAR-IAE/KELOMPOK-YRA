@@ -10,30 +10,30 @@ function ProductTable({ products, onDelete }) {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nama</th>
-          <th>Harga</th>
+          <th>Umur</th>
+          <th>Berat</th>
           <th>Stok</th>
-          <th>Kategori</th>
+          <th>Harga</th>
           <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
-        {products.map((prod) => (
-          <tr key={prod.id}>
-            <td>{prod.id}</td>
-            <td>{prod.nama}</td>
-            <td>{prod.harga}</td>
-            <td>{prod.stok}</td>
-            <td>{prod.kategori}</td>
+        {products.map((sapi) => (
+          <tr key={sapi.id}>
+            <td>{sapi.id}</td>
+            <td>{sapi.umur}</td>
+            <td>{sapi.berat}</td>
+            <td>{sapi.stok}</td>
+            <td>{sapi.harga}</td>
             <td>
               <button
-                onClick={() => navigate(`/product/edit/${prod.id}`)}
+                onClick={() => navigate(`/product/edit/${sapi.id}`)}
                 className="product-action-btn edit"
               >
                 Edit
               </button>
               <button
-                onClick={() => onDelete(prod.id)}
+                onClick={() => onDelete(sapi.id)}
                 className="product-action-btn delete"
               >
                 Delete
