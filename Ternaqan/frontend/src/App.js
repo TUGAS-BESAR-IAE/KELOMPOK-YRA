@@ -9,6 +9,9 @@ import Dashboard from "./features/dashboard/dashboard";
 import UserEdit from "./features/user/UserEdit";
 import ProductCreate from "./features/product/ProductCreate";
 import ProductEdit from "./features/product/ProductEdit";
+import Peternak from "./features/peternak/Peternak";
+import PeternakCreate from "./features/peternak/PeternakCreate";
+import PeternakEdit from "./features/peternak/PeternakEdit";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
         <Route path="/user/edit/:id" element={<UserEdit />} />
         <Route path="/product/create" element={<ProductCreate />} />
         <Route path="/product/edit/:id" element={<ProductEdit />} />
+        <Route path="/peternak" element={<Peternak />} />
+        <Route path="/peternak/create" element={<PeternakCreate />} />
+        <Route path="/peternak/edit/:id" element={<PeternakEdit />} />
       </Routes>
     </Router>
   );

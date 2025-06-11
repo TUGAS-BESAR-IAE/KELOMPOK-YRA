@@ -4,6 +4,7 @@ import "./sidebar.css";
 
 function Sidebar() {
   const [userDropdown, setUserDropdown] = useState(false);
+  const [peternakDropdown, setPeternakDropdown] = useState(false);
 
   return (
     <div className="sidebar">
@@ -16,10 +17,26 @@ function Sidebar() {
           <Link to="/product">Sapi</Link>
         </li>
         <li>
-          <Link to="/transactions">Transactions</Link>
-        </li>        
-        <li>
-          <Link to="/transactions">Peternak</Link>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => setPeternakDropdown((v) => !v)}
+          >
+            Peternak {peternakDropdown ? "▲" : "▼"}
+          </span>
+          {peternakDropdown && (
+            <ul
+              style={{
+                listStyle: "none",
+                paddingLeft: 16,
+                marginRight: 16,
+                paddingRight: 16,
+              }}
+            >
+              <li>
+                <Link to="/peternak">Kelola Sapi</Link>
+              </li>
+            </ul>
+          )}
         </li>
         <li>
           <span
@@ -29,15 +46,25 @@ function Sidebar() {
             Admin {userDropdown ? "▲" : "▼"}
           </span>
           {userDropdown && (
-            <ul style={{ listStyle: "none", paddingLeft: 16 }}>
+            <ul
+              style={{
+                listStyle: "none",
+                paddingLeft: 16,
+                marginRight: 16,
+                paddingRight: 16,
+              }}
+            >
               <li>
-                <Link to="/user/create">Create Admin</Link>
+                <Link to="/user/list">Kelola Admin</Link>
               </li>
               <li>
-                <Link to="/user/list">User List</Link>
+                <Link to="/peternak">Kelola Peternak</Link>
               </li>
             </ul>
           )}
+        </li>
+        <li>
+          <Link to="/transactions">Transactions</Link>
         </li>
       </ul>
     </div>

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import UserTable from "./UserTable";
+import PeternakTable from "./PeternakTable";
 import { useNavigate } from "react-router-dom";
-import "./user.css";
+import "./peternak.css";
 
-const API_URL = "http://localhost:8000/";
+const API_URL = "http://localhost:8002/";
 
-function UserList({ onEdit }) {
-  const [admins, setAdmins] = useState([]);
+function PeternakList() {
+  const [peternaks, setPeternaks] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchAdmins = () => {
+  const fetchPeternaks = () => {
     setLoading(true);
     fetch(API_URL, {
       method: "POST",
@@ -18,9 +18,8 @@ function UserList({ onEdit }) {
       body: JSON.stringify({
         query: `
           query {
-            admins {
+            peternaks {
               id
-              transaction_id
               nama
               alamat
               nohp
@@ -32,62 +31,52 @@ function UserList({ onEdit }) {
     })
       .then((res) => res.json())
       .then((result) => {
-        setAdmins(result.data.admins);
+        setPeternaks(result.data.peternaks || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   };
 
   useEffect(() => {
-    fetchAdmins();
+    fetchPeternaks();
   }, []);
 
-  // DELETE
   const handleDelete = (id) => {
-    if (!window.confirm("Yakin ingin menghapus user ini?")) return;
+    if (!window.confirm("Yakin ingin menghapus peternak ini?")) return;
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           mutation {
-            deleteAdmin(id: ${id})
+            deletePeternak(id: ${id})
           }
         `,
       }),
     })
       .then((res) => res.json())
-      .then(() => fetchAdmins());
-  };
-
-  // EDIT
-  const handleEdit = (admin) => {
-    if (onEdit) onEdit(admin);
+      .then(() => fetchPeternaks());
   };
 
   return (
-    <div className="userlist-container">
-      <h2 className="userlist-title">User List</h2>
+    <>
+      <h2 className="peternak-title">Peternak List</h2>
       <button
-        className="userlist-action-btn"
+        className="peternak-form-btn"
         style={{ maxWidth: 220, marginBottom: 24 }}
-        onClick={() => navigate("/user/create")}
+        onClick={() => navigate("/peternak/create")}
       >
-        + Tambah User
+        + Tambah Peternak
       </button>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="userlist-table-container">
-          <UserTable
-            admins={admins}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+        <div className="peternak-table-container">
+          <PeternakTable peternaks={peternaks} onDelete={handleDelete} />
         </div>
       )}
-    </div>
+    </>
   );
 }
 
-export default UserList;
+export default PeternakList;
