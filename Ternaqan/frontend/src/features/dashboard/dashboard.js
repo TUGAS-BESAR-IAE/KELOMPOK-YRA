@@ -31,10 +31,6 @@ const Dashboard = () => {
   const [sapiCount, setSapiCount] = useState(0);
   const [trxCount, setTrxCount] = useState(0);
 
-  const [adminPerTrx, setAdminPerTrx] = useState([]);
-  const [sapiPerStok, setSapiPerStok] = useState([]);
-  const [peternakPerUsername, setPeternakPerUsername] = useState([]);
-
   useEffect(() => {
     // Admin
     fetch(ADMIN_API, {
@@ -43,10 +39,7 @@ const Dashboard = () => {
       body: JSON.stringify({
         query: `
           query {
-            admins {
-              id
-              transaction_id
-            }
+            admins { id }
           }
         `,
       }),
@@ -55,19 +48,6 @@ const Dashboard = () => {
       .then((result) => {
         const admins = result.data.admins || [];
         setAdminCount(admins.length);
-
-        // Grafik: jumlah admin per transaction_id
-        const countMap = {};
-        admins.forEach((admin) => {
-          const trx = admin.transaction_id || "Tanpa Transaksi";
-          countMap[trx] = (countMap[trx] || 0) + 1;
-        });
-        setAdminPerTrx(
-          Object.entries(countMap).map(([trx, count]) => ({
-            trx,
-            count,
-          }))
-        );
       });
 
     // Peternak
@@ -77,10 +57,7 @@ const Dashboard = () => {
       body: JSON.stringify({
         query: `
           query {
-            peternaks {
-              id
-              username
-            }
+            peternaks { id }
           }
         `,
       }),
@@ -89,19 +66,6 @@ const Dashboard = () => {
       .then((result) => {
         const peternaks = result.data.peternaks || [];
         setPeternakCount(peternaks.length);
-
-        // Grafik: jumlah peternak per username (contoh grouping)
-        const countMap = {};
-        peternaks.forEach((p) => {
-          const uname = p.username || "Tanpa Username";
-          countMap[uname] = (countMap[uname] || 0) + 1;
-        });
-        setPeternakPerUsername(
-          Object.entries(countMap).map(([uname, count]) => ({
-            uname,
-            count,
-          }))
-        );
       });
 
     // Sapi
@@ -111,10 +75,7 @@ const Dashboard = () => {
       body: JSON.stringify({
         query: `
           query {
-            sapis {
-              id
-              stok
-            }
+            sapis { id }
           }
         `,
       }),
@@ -123,19 +84,6 @@ const Dashboard = () => {
       .then((result) => {
         const sapis = result.data.sapis || [];
         setSapiCount(sapis.length);
-
-        // Grafik: jumlah sapi per stok (contoh grouping)
-        const countMap = {};
-        sapis.forEach((s) => {
-          const stok = s.stok || 0;
-          countMap[stok] = (countMap[stok] || 0) + 1;
-        });
-        setSapiPerStok(
-          Object.entries(countMap).map(([stok, count]) => ({
-            stok,
-            count,
-          }))
-        );
       });
 
     // Transaksi (jika ada service transaksi)
@@ -145,9 +93,7 @@ const Dashboard = () => {
       body: JSON.stringify({
         query: `
           query {
-            transactions {
-              id
-            }
+            transactions { id }
           }
         `,
       }),
@@ -160,36 +106,47 @@ const Dashboard = () => {
       .catch(() => setTrxCount(0));
   }, []);
 
-  // Grafik data
+  // Chart data: hanya satu bar per chart
   const adminChartData = {
-    labels: adminPerTrx.map((d) => d.trx),
+    labels: ["Admin"],
     datasets: [
       {
-        label: "Jumlah Admin per Transaction ID",
-        data: adminPerTrx.map((d) => d.count),
+        label: "Total Admin",
+        data: [adminCount],
         backgroundColor: "#1976d2",
       },
     ],
   };
 
   const sapiChartData = {
-    labels: sapiPerStok.map((d) => d.stok),
+    labels: ["Sapi"],
     datasets: [
       {
-        label: "Jumlah Sapi per Stok",
-        data: sapiPerStok.map((d) => d.count),
+        label: "Total Sapi",
+        data: [sapiCount],
         backgroundColor: "#16a085",
       },
     ],
   };
 
   const peternakChartData = {
-    labels: peternakPerUsername.map((d) => d.uname),
+    labels: ["Peternak"],
     datasets: [
       {
-        label: "Jumlah Peternak per Username",
-        data: peternakPerUsername.map((d) => d.count),
+        label: "Total Peternak",
+        data: [peternakCount],
         backgroundColor: "#f39c12",
+      },
+    ],
+  };
+
+  const trxChartData = {
+    labels: ["Transaksi"],
+    datasets: [
+      {
+        label: "Total Transaksi",
+        data: [trxCount],
+        backgroundColor: "#e74c3c",
       },
     ],
   };
@@ -217,20 +174,20 @@ const Dashboard = () => {
       </div>
       <div className="dashboard-charts-row">
         <div className="dashboard-chart-container">
-          <h3 className="dashboard-chart-title">
-            Grafik Admin per Transaction ID
-          </h3>
-          <Bar data={adminChartData} />
+          <h3 className="dashboard-chart-title">Total Admin</h3>
+          <Bar data={adminChartData} options={{ indexAxis: "y" }} />
         </div>
         <div className="dashboard-chart-container">
-          <h3 className="dashboard-chart-title">Grafik Sapi per Stok</h3>
-          <Bar data={sapiChartData} />
+          <h3 className="dashboard-chart-title">Total Sapi</h3>
+          <Bar data={sapiChartData} options={{ indexAxis: "y" }} />
         </div>
         <div className="dashboard-chart-container">
-          <h3 className="dashboard-chart-title">
-            Grafik Peternak per Username
-          </h3>
-          <Bar data={peternakChartData} />
+          <h3 className="dashboard-chart-title">Total Peternak</h3>
+          <Bar data={peternakChartData} options={{ indexAxis: "y" }} />
+        </div>
+        <div className="dashboard-chart-container">
+          <h3 className="dashboard-chart-title">Total Transaksi</h3>
+          <Bar data={trxChartData} options={{ indexAxis: "y" }} />
         </div>
       </div>
     </div>

@@ -59,10 +59,10 @@ const SapiList = () => {
               {sapis.map((sapi) => (
                 <tr key={sapi.id}>
                   <td>{sapi.id}</td>
-                  <td>{sapi.umur}</td>
-                  <td>{sapi.berat}</td>
-                  <td>{sapi.stok}</td>
-                  <td>{sapi.harga}</td>
+                  <td>{sapi.umur} Tahun</td>
+                  <td>{sapi.berat} Kg</td>
+                  <td>{sapi.stok} Ekor</td>
+                  <td>Rp. {sapi.harga}</td>
                 </tr>
               ))}
             </tbody>
