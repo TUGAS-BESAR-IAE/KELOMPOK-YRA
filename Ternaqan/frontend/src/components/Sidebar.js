@@ -28,10 +28,10 @@ function Sidebar() {
           {userDropdown && (
             <ul style={{ listStyle: "none", paddingLeft: 16 }}>
               <li>
-                <Link to="/user/list">User List</Link>
+                <Link to="/user/create">Create Admin</Link>
               </li>
               <li>
-                <Link to="/user/create">Create Admin</Link>
+                <Link to="/user/list">User List</Link>
               </li>
             </ul>
           )}
