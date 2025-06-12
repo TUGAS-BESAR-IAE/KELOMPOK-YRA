@@ -267,8 +267,8 @@ This project is licensed under the **MIT License**.
 
 ## 👨‍💻 Team - KELOMPOK YRA
 
-- Developer 1
-- Developer 2
-- Developer 3
+- YAP
+- Ridwan
+- Anin
 
 > Tech Stack: React.js, FastAPI, GraphQL, Docker, PostgreSQL
