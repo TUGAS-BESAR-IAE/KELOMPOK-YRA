@@ -1,0 +1,32 @@
+type Admin {
+  id: Int!
+  transaction_id: Int
+  nama: String!
+  alamat: String
+  nohp: String
+  username: String!
+}
+
+type Query {
+  admins: [Admin!]!
+  admin(id: Int!): Admin
+}
+
+type Mutation {
+  createAdmin(
+    transaction_id: Int
+    nama: String!
+    alamat: String
+    nohp: String
+    username: String!
+  ): Admin
+  deleteAdmin(id: Int!): Boolean
+  updateAdmin(
+    id: Int!
+    transaction_id: Int
+    nama: String
+    alamat: String
+    nohp: String
+    username: String
+  ): Admin
+}
