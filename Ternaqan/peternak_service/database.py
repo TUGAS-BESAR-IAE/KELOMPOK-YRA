@@ -1,23 +1,27 @@
-import os
-from databases import Database
+import sqlite3
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:HicYWJpHwSQIIpHxzgPTPZesqczOfwzp@postgres.railway.internal:5432/railway")
+DATABASE_NAME = "peternak.db"
 
-async def get_db_connection():
-    database = Database(DATABASE_URL)
-    await database.connect()
-    return database
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE_NAME)
+    conn.row_factory = sqlite3.Row
+    return conn
 
-async def init_db():
-    database = await get_db_connection()
-    await database.execute("""
+def init_db():
+    conn = get_db_connection()
+    c = conn.cursor()
+    c.execute("""
         CREATE TABLE IF NOT EXISTS peternaks (
-            id SERIAL PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             nama TEXT NOT NULL,
             alamat TEXT,
             nohp TEXT,
             username TEXT UNIQUE NOT NULL
         )
     """)
+    conn.commit()
+    conn.close()
     print("Tabel peternaks berhasil dibuat.")
-    await database.disconnect()
+
+if __name__ == "__main__":
+    init_db()
