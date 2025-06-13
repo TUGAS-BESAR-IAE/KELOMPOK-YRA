@@ -1,18 +1,18 @@
-import sqlite3
+import os
+from databases import Database
 
-DATABASE_NAME = "admin.db"
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:muUWVeMidjwfukLtYCQnFIdIDxiRgJTx@postgres.railway.internal:5432/railway")
 
-def get_db_connection():
-    conn = sqlite3.connect(DATABASE_NAME)
-    conn.row_factory = sqlite3.Row
-    return conn
+async def get_db_connection():
+    database = Database(DATABASE_URL)
+    await database.connect()
+    return database
 
-def init_db():
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute("""
+async def init_db():
+    database = await get_db_connection()
+    await database.execute("""
         CREATE TABLE IF NOT EXISTS admins (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             transaction_id INTEGER,
             nama TEXT NOT NULL,
             alamat TEXT,
@@ -20,9 +20,5 @@ def init_db():
             username TEXT UNIQUE NOT NULL
         )
     """)
-    conn.commit()
-    conn.close()
     print("Tabel admins berhasil dibuat.")
-
-if __name__ == "__main__":
-    init_db()
+    await database.disconnect()

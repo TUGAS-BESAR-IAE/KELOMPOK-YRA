@@ -4,64 +4,69 @@ from database import get_db_connection
 query = QueryType()
 mutation = MutationType()
 
+# GET ALL ADMINS
 @query.field("admins")
-def resolve_admins(_, info):
-    conn = get_db_connection()
-    admins = conn.execute("SELECT * FROM admins").fetchall()
-    conn.close()
-    return [dict(row) for row in admins]
+async def resolve_admins(_, info):
+    database = await get_db_connection()
+    admins = await database.fetch_all("SELECT * FROM admins")
+    await database.disconnect()
+    return [dict(admin) for admin in admins]
 
+# GET ADMIN BY ID
 @query.field("admin")
-def resolve_admin(_, info, id):
-    conn = get_db_connection()
-    admin = conn.execute("SELECT * FROM admins WHERE id = ?", (id,)).fetchone()
-    conn.close()
+async def resolve_admin(_, info, id):
+    database = await get_db_connection()
+    admin = await database.fetch_one("SELECT * FROM admins WHERE id = :id", {"id": id})
+    await database.disconnect()
     return dict(admin) if admin else None
 
+# CREATE ADMIN
 @mutation.field("createAdmin")
-def resolve_create_admin(_, info, transaction_id=None, nama=None, alamat=None, nohp=None, username=None):
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute(
-        "INSERT INTO admins (transaction_id, nama, alamat, nohp, username) VALUES (?, ?, ?, ?, ?)",
-        (transaction_id, nama, alamat, nohp, username)
+async def resolve_create_admin(_, info, transaction_id=None, nama=None, alamat=None, nohp=None, username=None):
+    database = await get_db_connection()
+    admin_id = await database.execute(
+        "INSERT INTO admins (transaction_id, nama, alamat, nohp, username) VALUES (:transaction_id, :nama, :alamat, :nohp, :username) RETURNING id",
+        {"transaction_id": transaction_id, "nama": nama, "alamat": alamat, "nohp": nohp, "username": username}
     )
-    conn.commit()
-    admin_id = cur.lastrowid
-    admin = conn.execute("SELECT * FROM admins WHERE id = ?", (admin_id,)).fetchone()
-    conn.close()
+    admin = await database.fetch_one("SELECT * FROM admins WHERE id = :id", {"id": admin_id})
+    await database.disconnect()
     return dict(admin)
 
+# UPDATE ADMIN
 @mutation.field("updateAdmin")
-def resolve_update_admin(_, info, id, transaction_id=None, nama=None, alamat=None, nohp=None, username=None):
-    conn = get_db_connection()
-    cur = conn.cursor()
-    admin = cur.execute("SELECT * FROM admins WHERE id = ?", (id,)).fetchone()
+async def resolve_update_admin(_, info, id, transaction_id=None, nama=None, alamat=None, nohp=None, username=None):
+    database = await get_db_connection()
+    admin = await database.fetch_one("SELECT * FROM admins WHERE id = :id", {"id": id})
     if not admin:
-        conn.close()
+        await database.disconnect()
         return None
     updated_transaction_id = transaction_id if transaction_id is not None else admin["transaction_id"]
     updated_nama = nama if nama is not None else admin["nama"]
     updated_alamat = alamat if alamat is not None else admin["alamat"]
     updated_nohp = nohp if nohp is not None else admin["nohp"]
     updated_username = username if username is not None else admin["username"]
-    cur.execute(
-        "UPDATE admins SET transaction_id=?, nama=?, alamat=?, nohp=?, username=? WHERE id=?",
-        (updated_transaction_id, updated_nama, updated_alamat, updated_nohp, updated_username, id)
+    await database.execute(
+        "UPDATE admins SET transaction_id = :transaction_id, nama = :nama, alamat = :alamat, nohp = :nohp, username = :username WHERE id = :id",
+        {
+            "transaction_id": updated_transaction_id,
+            "nama": updated_nama,
+            "alamat": updated_alamat,
+            "nohp": updated_nohp,
+            "username": updated_username,
+            "id": id
+        }
     )
-    conn.commit()
-    updated_admin = cur.execute("SELECT * FROM admins WHERE id = ?", (id,)).fetchone()
-    conn.close()
+    updated_admin = await database.fetch_one("SELECT * FROM admins WHERE id = :id", {"id": id})
+    await database.disconnect()
     return dict(updated_admin)
 
+# DELETE ADMIN
 @mutation.field("deleteAdmin")
-def resolve_delete_admin(_, info, id):
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute("DELETE FROM admins WHERE id = ?", (id,))
-    conn.commit()
-    deleted = cur.rowcount > 0
-    conn.close()
+async def resolve_delete_admin(_, info, id):
+    database = await get_db_connection()
+    await database.execute("DELETE FROM admins WHERE id = :id", {"id": id})
+    deleted = True
+    await database.disconnect()
     return deleted
 
 resolvers = [query, mutation]
