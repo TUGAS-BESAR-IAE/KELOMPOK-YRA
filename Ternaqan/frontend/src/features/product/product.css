@@ -145,6 +145,15 @@
   filter: brightness(1.08);
 }
 
+.product-form-label {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #16896a;
+  display: block;
+}
+
 @media (max-width: 900px) {
   .product-container {
     margin-left: 0;

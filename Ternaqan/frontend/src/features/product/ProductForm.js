@@ -32,7 +32,11 @@ function ProductForm({ onSubmit, initialData, onCancel }) {
     <div className="product-form-container">
       <form onSubmit={handleSubmit} className="product-form">
         <div className="product-form-fields">
+          <label className="product-form-label" htmlFor="umur">
+            Umur
+          </label>
           <input
+            id="umur"
             name="umur"
             placeholder="Umur"
             value={form.umur}
@@ -41,7 +45,11 @@ function ProductForm({ onSubmit, initialData, onCancel }) {
             type="number"
             required
           />
+          <label className="product-form-label" htmlFor="berat">
+            Berat
+          </label>
           <input
+            id="berat"
             name="berat"
             placeholder="Berat"
             value={form.berat}
@@ -50,7 +58,11 @@ function ProductForm({ onSubmit, initialData, onCancel }) {
             type="number"
             required
           />
+          <label className="product-form-label" htmlFor="stok">
+            Stok
+          </label>
           <input
+            id="stok"
             name="stok"
             placeholder="Stok"
             value={form.stok}
@@ -59,7 +71,11 @@ function ProductForm({ onSubmit, initialData, onCancel }) {
             type="number"
             required
           />
+          <label className="product-form-label" htmlFor="harga">
+            Harga
+          </label>
           <input
+            id="harga"
             name="harga"
             placeholder="Harga"
             value={form.harga}
@@ -71,15 +87,13 @@ function ProductForm({ onSubmit, initialData, onCancel }) {
           <button className="product-form-btn" type="submit">
             {initialData ? "Update" : "Create"}
           </button>
-          {initialData && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="product-form-btn cancel"
-            >
-              Cancel
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={onCancel}
+            className="product-form-btn cancel"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

@@ -1,11 +1,14 @@
 import React from "react";
 import UserForm from "./UserForm";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./userForm.css";
 
-const API_URL = "http://localhost:8000/";
+const API_URL = process.env.REACT_APP_ADMIN_API;
 
 function UserCreate() {
+  const navigate = useNavigate();
+
   const handleSubmit = (data) => {
     fetch(API_URL, {
       method: "POST",
@@ -29,7 +32,7 @@ function UserCreate() {
         if (result.data && result.data.createAdmin) {
           Swal.fire("Berhasil!", "User berhasil ditambahkan.", "success").then(
             () => {
-              window.location.href = "/user/list";
+              navigate("/user/list");
             }
           );
         } else {
@@ -44,7 +47,10 @@ function UserCreate() {
   return (
     <div className="user-container">
       <h2 className="user-title">Create Admin</h2>
-      <UserForm onSubmit={handleSubmit} />
+      <UserForm
+        onSubmit={handleSubmit}
+        onCancel={() => navigate("/user/list")}
+      />
     </div>
   );
 }
